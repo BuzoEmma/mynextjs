@@ -7,7 +7,7 @@ const handler = async (req, res) => {
       !isValidSignature(
         JSON.stringify(req.body),
         signature,
-        process.env.SANITY_WEBHOOK_SECRETS
+        process.env.SANITY_WEBHOOK_SECRET
       )
     )
       return res.status(401).json({ msg: "Invalid Request" });
@@ -20,6 +20,5 @@ const handler = async (req, res) => {
     res.status(500).json({ error: "Something Went Wrong" });
   }
 };
-
 
 export default handler
