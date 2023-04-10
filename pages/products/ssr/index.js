@@ -4,12 +4,15 @@ import { client } from "../../../lip/sanityClient";
 const Products = ({ products }) => {
   console.log(products);
   return (
-    <Link href={`/products/ssr/${products.slug}`}>
+    <div>
+      hello SSR
       {products.map((product) => (
+        <Link href={`/products/ssr/${product.slug}`} key={product._id}>
         <p>{product.title}</p>
+        </Link>
       ))}
-      hello
-    </Link>
+      
+      </div>
   );
 };
 

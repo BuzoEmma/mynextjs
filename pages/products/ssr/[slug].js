@@ -1,28 +1,37 @@
-import Link from "next/link";
-import { client } from "../../../lip/sanityClient";
+import React from 'react'
+import { client } from '../../../lip/sanityClient'
+import Link from 'next/link'
 
-const Product = ({ products }) => {
-  console.log(products);
+
+
+const Product = ({product}) => {
+  console.log(product)
   return (
-    <Link href={`/products/ssr/${products.slug}`}>
-      {products.map((product) => (
-        <p>{product.title}</p>
-      ))}
-      hello
-    </Link>
-  );
-};
+    <div>
+      Slug product
+      <div>
+        {product.title}
+        {product.description}
+        {product.slug}
+        {product.publishedAt}
+      </div>
+     
+    </div>
+  )
+} 
 
-export default Product;
+export default Product
 
-export const getServerSideProps = async () => {
-  const products = await client.fetch(
-    `*[_type == "product"  && defined(slug.current)  && !(_id in path("drafts.**"))]{..., "slug":slug.current}`
-  );
 
-  return {
-    props: {
-      products,
-    },
-  };
+export const getServerSideProps = async (context) => {
+  const {slug} = context.params
+    const product = await client.fetch( `*[_type == "product" && defined(slug.current) && !(_id in path("draft.**")) && slug.current == $slug][0]{..., "slug":slug.current}`, {slug}
+    )
+
+    return {
+      props: {
+        product
+      }
+    }
+
 };
