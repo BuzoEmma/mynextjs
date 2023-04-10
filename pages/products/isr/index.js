@@ -8,11 +8,10 @@ const Products = ({ products }) => {
       hello SSR
       {products.map((product) => (
         <Link href={`/products/ssg/${product.slug}`} key={product._id}>
-        <p>{product.title}</p>
+          <p>{product.title}</p>
         </Link>
       ))}
-      
-      </div>
+    </div>
   );
 };
 
@@ -26,9 +25,6 @@ export const getStaticProps = async () => {
   return {
     props: {
       products,
-      revalidate:10
     },
   };
 };
-
-
